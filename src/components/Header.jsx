@@ -1,6 +1,7 @@
 // src/components/Header.jsx
 
 import React from 'react';
+import { Link } from 'react-router-dom'; // Importa el componente Link
 import './Header.css';
 
 const Header = () => {
@@ -8,9 +9,9 @@ const Header = () => {
     <header>
       <h1>Mi Proyecto de Front 2</h1>
       <nav>
-        <a href="#">Inicio</a>
-        <a href="#">Servicios</a>
-        <a href="#">Contacto</a>
+        <Link to="/">Inicio</Link>
+        <Link to="/servicios">Servicios</Link>
+        <Link to="/contacto">Contacto</Link>
       </nav>
     </header>
   );
