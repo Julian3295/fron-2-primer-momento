@@ -1,24 +1,43 @@
 // src/components/MainContent.jsx
-import React from 'react';
+
+import React, { useState, useEffect } from 'react';
 
 const MainContent = () => {
-  const services = [
-    { id: 1, title: 'Diseño Web', description: 'Creamos sitios web modernos y responsive.' },
-    { id: 2, title: 'Desarrollo de Apps', description: 'Construimos aplicaciones móviles a medida.' },
-    { id: 3, title: 'Marketing Digital', description: 'Estrategias para impulsar tu presencia online.' }
-  ];
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then(response => response.json())
+      .then(apiData => {
+        setData(apiData);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error al obtener datos:', error);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <main>
+        <h2>Cargando contenido...</h2>
+      </main>
+    );
+  }
 
   return (
     <main>
-      <h2>Nuestros Servicios</h2>
-      <div>
-        {services.map(service => (
-          <div key={service.id}>
-            <h3>{service.title}</h3>
-            <p>{service.description}</p>
-          </div>
+      <h2>Contenido obtenido de una API</h2>
+      <ul>
+        {data.map(item => (
+          <li key={item.id}>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </li>
         ))}
-      </div>
+      </ul>
     </main>
   );
 };
